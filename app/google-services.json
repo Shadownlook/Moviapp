@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "206328563279",
+    "project_id": "moviapp-cca36",
+    "storage_bucket": "moviapp-cca36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206328563279:android:c616ef19b08242fcf18c3a",
+        "android_client_info": {
+          "package_name": "com.sombra.moviapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyPheeRmPQTE7w9Ydvt96lHrfyLS3_DJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
