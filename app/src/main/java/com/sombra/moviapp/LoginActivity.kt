@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -34,11 +35,12 @@ class LoginActivity : AppCompatActivity() {
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
         val loginButton = findViewById<Button>(R.id.loginButton)
         val errorTextView = findViewById<TextView>(R.id.errorTextView)
+        val registerButton = findViewById<Button>(R.id.registerButton) // Nuevo botón de registro
 
         // Acción al hacer clic en el botón de Login
         loginButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
 
             // Verifica si los campos están vacíos
             if (email.isEmpty() || password.isEmpty()) {
@@ -55,13 +57,20 @@ class LoginActivity : AppCompatActivity() {
                         getLocationAndStoreInDatabase()
                     } else {
                         // Si falla el login
-                        errorTextView.text = "Error: " + task.exception?.message
+                        errorTextView.text = "Error: ${task.exception?.message}"
                         errorTextView.visibility = TextView.VISIBLE
                     }
                 }
         }
+
+        // Acción al hacer clic en el botón de Registro
+        registerButton.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 
+    // Obtener la ubicación y almacenarla en Firebase
     private fun getLocationAndStoreInDatabase() {
         // Verificar permisos de ubicación
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -72,23 +81,26 @@ class LoginActivity : AppCompatActivity() {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
                     if (location != null) {
-                        val latitude = location.latitude
-                        val longitude = location.longitude
-                        storeLocationInDatabase(latitude, longitude)
+                        storeLocationInDatabase(location.latitude, location.longitude)
                     } else {
-                        Toast.makeText(this, "No se pudo obtener la ubicación.", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(findViewById(android.R.id.content), "No se pudo obtener la ubicación.", Snackbar.LENGTH_LONG).show()
                     }
+                }
+                .addOnFailureListener {
+                    Snackbar.make(findViewById(android.R.id.content), "Error al intentar obtener la ubicación.", Snackbar.LENGTH_LONG).show()
                 }
         }
     }
 
+    // Almacenar ubicación en Firebase
     private fun storeLocationInDatabase(latitude: Double, longitude: Double) {
         val userId = auth.currentUser?.uid
         val database = FirebaseDatabase.getInstance().getReference("GPS/$userId") // Ruta válida
 
-        val locationData = HashMap<String, Any>()
-        locationData["latitude"] = latitude
-        locationData["longitude"] = longitude
+        val locationData = hashMapOf(
+            "latitude" to latitude,
+            "longitude" to longitude
+        )
 
         database.setValue(locationData).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -97,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "Error al almacenar la ubicación.", Toast.LENGTH_SHORT).show()
+                Snackbar.make(findViewById(android.R.id.content), "Error al almacenar la ubicación.", Snackbar.LENGTH_LONG).show()
             }
         }
     }
@@ -108,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getLocationAndStoreInDatabase()
             } else {
-                Toast.makeText(this, "Permiso de ubicación denegado.", Toast.LENGTH_SHORT).show()
+                Snackbar.make(findViewById(android.R.id.content), "Permiso de ubicación denegado.", Snackbar.LENGTH_LONG).show()
             }
         }
     }
