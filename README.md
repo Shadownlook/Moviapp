@@ -53,3 +53,11 @@ Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más 
 
 Contacto
 Si tienes preguntas o sugerencias, no dudes en abrir un issue en el repositorio o contactar al autor.
+
+
+### Personalización:
+- Asegúrate de personalizar la sección de "Uso" y "Contribución" según las características específicas y la forma en que deseas que otros colaboren.
+- Incluye cualquier otra información relevante que consideres necesaria. 
+
+Si necesitas ajustes o más información, ¡avísame!
+
