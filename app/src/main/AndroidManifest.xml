@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -28,13 +32,22 @@
         <!-- Declaración de MenuActivity -->
         <activity
             android:name=".MenuActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/menu_activity_name"
+            android:theme="@style/Theme.MoviApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".MiCuentaActivity"></activity>
+        <activity android:name=".MapaActivity"></activity>
+        <activity android:name=".VerPedidosActivity"></activity>
+        <activity android:name=".AsignarDireccionActivity"></activity>
+        <meta-data
+            android:name="org.osmdroid.config"
+            android:value="true" />
     </application>
 
 </manifest>

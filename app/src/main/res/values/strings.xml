@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MoviApp</string>
     <string name="menu_activity_name">Menu</string>
+    <string name="map_description">Mapa interactivo para visualizar ubicaciones.</string>
 </resources>

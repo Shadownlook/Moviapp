@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.firebase.database.ktx)
     implementation(libs.material)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,4 +75,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
+    implementation("org.osmdroid:osmdroid-wms:6.1.16")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
 }
